@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Server.Data;
 using Server.Entities.Models;
+using Server.Repositories.Interfaces;
 
 namespace Server.Controllers;
 
@@ -9,26 +9,60 @@ namespace Server.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    private readonly DataContext _context;
+    private readonly IProductRepository _productRepository;
 
-    public ProductController(DataContext context)
+    public ProductController(IProductRepository productRepository)
     {
-        _context = context;
+        _productRepository = productRepository;
     }
 
     [HttpGet]
     [Route("get-products")]
     public async Task<IActionResult> GetProducts()
     {
-        List<Product> products = await _context.Products.ToListAsync();
+        IReadOnlyList<Product> products = await _productRepository.GetProductsAsync();
         return Ok(products);
+    }
+
+    [HttpGet]
+    [Route("get-products-of-specific-brand-and-category")]
+    public async Task<IActionResult> GetProducts(string? brand, string? category)
+    {
+        IReadOnlyList<Product> products = await _productRepository.GetProductsAsync(brand, category);
+        return Ok(products);
+    }
+
+    [HttpGet]
+    [Route("get-products-by-filtering")]
+    [ProducesResponseType(typeof(IReadOnlyList<Product>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public IActionResult GetProductsFiltered(string? sort)
+    {
+        IReadOnlyList<Product> products = _productRepository.GetProductsFiltered(sort);
+        return Ok(products);
+    }
+
+    [HttpGet]
+    [Route("get-brands")]
+    public async Task<IActionResult> GetBrands()
+    {
+        IReadOnlyList<string> brands = await _productRepository.GetBrandsAsync();
+        return Ok(brands);
+    }
+
+    [HttpGet]
+    [Route("get-categories")]
+    public async Task<IActionResult> GetCategories()
+    {
+        IReadOnlyList<string> categories = await _productRepository.GetCategoriesAsync();
+        return Ok(categories);
     }
 
     [HttpGet]
     [Route("get-product")]
     public async Task<IActionResult> GetProduct(int productId)
     {
-        Product? product = await _context.Products.FindAsync(productId);
+        Product? product = await _productRepository.GetProductAsync(productId);
         return product == null ? NotFound() : Ok(product);
     }
 
@@ -36,9 +70,18 @@ public class ProductController : ControllerBase
     [Route("create-product")]
     public async Task<IActionResult> PostProduct(Product product)
     {
-        _ = await _context.Products.AddAsync(product);
-        _ = await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetProduct), new { productId = product.Id }, product);
+        if (product == null)
+        {
+            return BadRequest("Product cannot be null.");
+        }
+
+        await _productRepository.AddProductAsync(product);
+
+        bool isSaved = await _productRepository.SaveChangesAsync();
+
+        return !isSaved
+            ? StatusCode(StatusCodes.Status500InternalServerError, "Error saving product.")
+            : CreatedAtAction(nameof(GetProduct), new { productId = product.Id }, product);
     }
 
     [HttpPut]
@@ -50,15 +93,20 @@ public class ProductController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(product).State = EntityState.Modified;
+        _productRepository.UpdateProductAsync(product);
 
         try
         {
-            _ = await _context.SaveChangesAsync();
+            bool isSaved = await _productRepository.SaveChangesAsync();
+
+            if (!isSaved)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating product.");
+            }
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!await ProductExists(productId))
+            if (!await _productRepository.ProductExistsAsync(productId))
             {
                 return NotFound();
             }
@@ -75,20 +123,15 @@ public class ProductController : ControllerBase
     [Route("delete-product")]
     public async Task<IActionResult> DeleteProduct(int productId)
     {
-        Product? product = await _context.Products.FindAsync(productId);
+        Product? product = await _productRepository.GetProductAsync(productId);
 
         if (product == null)
         {
             return NotFound();
         }
 
-        _ = _context.Products.Remove(product);
-        _ = await _context.SaveChangesAsync();
-        return NoContent();
-    }
-
-    private async Task<bool> ProductExists(int productId)
-    {
-        return await _context.Products.AnyAsync(e => e.Id == productId);
+        _productRepository.DeleteProductAsync(product);
+        bool isDeleted = await _productRepository.SaveChangesAsync();
+        return !isDeleted ? StatusCode(StatusCodes.Status500InternalServerError, "Error deleting product.") : NoContent();
     }
 }
