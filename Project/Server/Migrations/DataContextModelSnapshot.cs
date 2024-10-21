@@ -47,7 +47,7 @@ namespace Server.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
+                    b.Property<double>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("QuantityInStock")
@@ -66,7 +66,7 @@ namespace Server.Migrations
                             Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                             Name = "Angular Speedster Board 2000",
                             PictureUrl = "/images/products/sb-ang1.png",
-                            Price = 200m,
+                            Price = 200.0,
                             QuantityInStock = 82
                         },
                         new
@@ -77,7 +77,7 @@ namespace Server.Migrations
                             Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                             Name = "Green Angular Board 3000",
                             PictureUrl = "/images/products/sb-ang2.png",
-                            Price = 150m,
+                            Price = 150.0,
                             QuantityInStock = 75
                         },
                         new
@@ -88,7 +88,7 @@ namespace Server.Migrations
                             Description = "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                             Name = "Core Board Speed Rush 3",
                             PictureUrl = "/images/products/sb-core1.png",
-                            Price = 180m,
+                            Price = 180.0,
                             QuantityInStock = 3
                         },
                         new
@@ -99,7 +99,7 @@ namespace Server.Migrations
                             Description = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                             Name = "Net Core Super Board",
                             PictureUrl = "/images/products/sb-core2.png",
-                            Price = 300m,
+                            Price = 300.0,
                             QuantityInStock = 52
                         },
                         new
@@ -110,7 +110,7 @@ namespace Server.Migrations
                             Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                             Name = "React Board Super Whizzy Fast",
                             PictureUrl = "/images/products/sb-react1.png",
-                            Price = 250m,
+                            Price = 250.0,
                             QuantityInStock = 97
                         },
                         new
@@ -121,7 +121,7 @@ namespace Server.Migrations
                             Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
                             Name = "Typescript Entry Board",
                             PictureUrl = "/images/products/sb-ts1.png",
-                            Price = 120m,
+                            Price = 120.0,
                             QuantityInStock = 37
                         },
                         new
@@ -132,7 +132,7 @@ namespace Server.Migrations
                             Description = "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                             Name = "Core Blue Hat",
                             PictureUrl = "/images/products/hat-core1.png",
-                            Price = 10m,
+                            Price = 10.0,
                             QuantityInStock = 32
                         },
                         new
@@ -143,7 +143,7 @@ namespace Server.Migrations
                             Description = "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                             Name = "Green React Woolen Hat",
                             PictureUrl = "/images/products/hat-react1.png",
-                            Price = 8m,
+                            Price = 8.0,
                             QuantityInStock = 6
                         },
                         new
@@ -154,7 +154,7 @@ namespace Server.Migrations
                             Description = "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                             Name = "Purple React Woolen Hat",
                             PictureUrl = "/images/products/hat-react2.png",
-                            Price = 15m,
+                            Price = 15.0,
                             QuantityInStock = 17
                         },
                         new
@@ -165,7 +165,7 @@ namespace Server.Migrations
                             Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                             Name = "Blue Code Gloves",
                             PictureUrl = "/images/products/glove-code1.png",
-                            Price = 18m,
+                            Price = 18.0,
                             QuantityInStock = 74
                         },
                         new
@@ -176,7 +176,7 @@ namespace Server.Migrations
                             Description = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                             Name = "Green Code Gloves",
                             PictureUrl = "/images/products/glove-code2.png",
-                            Price = 15m,
+                            Price = 15.0,
                             QuantityInStock = 19
                         },
                         new
@@ -187,7 +187,7 @@ namespace Server.Migrations
                             Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.",
                             Name = "Purple React Gloves",
                             PictureUrl = "/images/products/glove-react1.png",
-                            Price = 16m,
+                            Price = 16.0,
                             QuantityInStock = 77
                         },
                         new
@@ -198,7 +198,7 @@ namespace Server.Migrations
                             Description = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                             Name = "Green React Gloves",
                             PictureUrl = "/images/products/glove-react2.png",
-                            Price = 14m,
+                            Price = 14.0,
                             QuantityInStock = 45
                         },
                         new
@@ -209,7 +209,7 @@ namespace Server.Migrations
                             Description = "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                             Name = "Redis Red Boots",
                             PictureUrl = "/images/products/boot-redis1.png",
-                            Price = 250m,
+                            Price = 250.0,
                             QuantityInStock = 49
                         },
                         new
@@ -220,7 +220,7 @@ namespace Server.Migrations
                             Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                             Name = "Core Red Boots",
                             PictureUrl = "/images/products/boot-core2.png",
-                            Price = 189m,
+                            Price = 189.0,
                             QuantityInStock = 28
                         },
                         new
@@ -231,7 +231,7 @@ namespace Server.Migrations
                             Description = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                             Name = "Core Purple Boots",
                             PictureUrl = "/images/products/boot-core1.png",
-                            Price = 199m,
+                            Price = 199.0,
                             QuantityInStock = 69
                         },
                         new
@@ -242,7 +242,7 @@ namespace Server.Migrations
                             Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
                             Name = "Angular Purple Boots",
                             PictureUrl = "/images/products/boot-ang2.png",
-                            Price = 150m,
+                            Price = 150.0,
                             QuantityInStock = 35
                         },
                         new
@@ -253,7 +253,7 @@ namespace Server.Migrations
                             Description = "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                             Name = "Angular Blue Boots",
                             PictureUrl = "/images/products/boot-ang1.png",
-                            Price = 180m,
+                            Price = 180.0,
                             QuantityInStock = 27
                         });
                 });
